@@ -1,14 +1,18 @@
 package main
 
 import (
+	"crypto/rand"
+	"fmt"
 	"log"
+	"math/big"
 	"net"
 	"net/http"
+	"time"
 
 	"golang.org/x/net/websocket"
 )
 
-const addr = "localhost:6666"
+const addr = "localhost:9943"
 
 var globalWsServer *websocket.Server
 
@@ -41,4 +45,15 @@ func handleHTTP(rw http.ResponseWriter, r *http.Request) {
 
 func handleWebsocket(c *websocket.Conn) {
 	log.Printf("Handling Websocket\n")
+	for {
+		delayNumber, err := rand.Int(rand.Reader, big.NewInt(1000))
+		delay := time.Duration(delayNumber.Int64()) * time.Millisecond
+		if err != nil {
+			log.Printf("Error generating new delay, sleeping for 5 seconds: %v\n", err)
+			time.Sleep(5 * time.Second)
+			continue
+		}
+		time.Sleep(delay)
+		fmt.Fprintf(c, "Waited for %s", delay)
+	}
 }

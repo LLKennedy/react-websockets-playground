@@ -3,12 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 
 
-let conn = new WebSocket("localhost:6666");
+let conn = new WebSocket("ws://localhost:9943");
 conn.addEventListener("open", (ev: Event) => {
   console.log("Opened Websocket: " + ev);
 });
 conn.addEventListener("message", ev => {
-  console.log("Received message: " + ev.data)
+  console.log("Received message: " + ev.data);
+})
+conn.addEventListener("error", ev => {
+  console.log("Received error: " + ev);
+})
+conn.addEventListener("close", ev => {
+  console.log("Received close: " + ev.code);
 })
 
 function App() {

@@ -2,7 +2,17 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
+let conn = new WebSocket("localhost:6666");
+conn.addEventListener("open", (ev: Event) => {
+  console.log("Opened Websocket: " + ev);
+});
+conn.addEventListener("message", ev => {
+  console.log("Received message: " + ev.data)
+})
+
 function App() {
+  console.log()
   return (
     <div className="App">
       <header className="App-header">

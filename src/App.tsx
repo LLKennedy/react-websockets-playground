@@ -26,7 +26,7 @@ export class App extends React.Component<{}, { lastMessage: string, conn: WebSoc
   componentDidMount() {
     this.state.conn.addEventListener("message", ev => {
       this.setState({
-        lastMessage: ev.data,
+        lastMessage: `Waited ${JSON.parse(ev.data).delay}`,
       })
       // console.log("Received message: " + ev.data);
     })

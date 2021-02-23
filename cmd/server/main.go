@@ -54,6 +54,6 @@ func handleWebsocket(c *websocket.Conn) {
 			continue
 		}
 		time.Sleep(delay)
-		fmt.Fprintf(c, "Waited for %s", delay)
+		fmt.Fprintf(c, `{"delay": "%s"}`, delay)
 	}
 }
